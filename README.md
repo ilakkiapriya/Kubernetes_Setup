@@ -1,27 +1,30 @@
 # Kubernetes_Setup
+
 1) Master Machine
-  a) sudo apt install docker.io
-  b) sudo systemctl enable docker
-  c) sudo apt install curl
-  d) sudo swapoff -a
-  e) sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-  f) sudo apt install kubeadm
-  g) sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-  h) mkdir -p $HOME/.kube
-  i) sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  j) sudo chown $(id -u):$(id -g) $HOME/.kube/config
-  k) sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-  l) sudo kubectl get nodes
-  m) sudo kubectl get pods --all-namespaces
+  a) sudo swapoff -a
+  b) sudo apt install docker.io
+  c) sudo systemctl enable docker
+  d) sudo apt install curl
+  e) curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+  f) sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+  g) sudo apt install kubeadm
+  h) sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+  i) mkdir -p $HOME/.kube
+  j) sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  k) sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  l) sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  m) sudo kubectl get nodes
+  n) sudo kubectl get pods --all-namespaces
 
 2) Worker machine
-  a) sudo apt install docker.io
-  b) sudo systemctl enable docker
-  c) sudo apt install curl
-  d) sudo swapoff -a
-  e) sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-  f) sudo apt install kubeadm
-  g) --->sudo kubeadm join <command>
+  a) sudo swapoff -a
+  b) sudo apt install docker.io
+  c) sudo systemctl enable docker
+  d) sudo apt install curl
+  e) curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+  f) sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+  g) sudo apt install kubeadm
+  h) --->sudo kubeadm join <command>
 
 Kubernetes dashboard installation (master machine preferred)
 1) sudo kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
@@ -29,7 +32,7 @@ Kubernetes dashboard installation (master machine preferred)
 3)  --> kubectl create clusterrolebinding dashboard-admin-sa  --clusterrole=cluster-admin --serviceaccount=trackerapp:dashboard-admin-sa  (Make sure that the namespace trackerapp exists)
 4)  kubectl get secrets
 5)  --> kubectl describe secret <dashboard-admin-sa-token-dpccz>
- 6) kubectl proxy (need this if running on worker machine)
+6) kubectl proxy
 Open the browser
   http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
 
